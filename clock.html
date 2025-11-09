@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Clock</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #111827, #1e3a8a);
+      font-family: 'Orbitron', sans-serif;
+      color: #f8fafc;
+      overflow: hidden;
+    }
+
+    #clock {
+      font-size: 4rem;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 30px 60px;
+      border-radius: 20px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.4);
+      border: 2px solid rgba(0, 255, 255, 0.2);
+      transition: 0.3s ease;
+      text-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+    }
+
+    #clock:hover {
+      box-shadow: 0 0 40px rgba(0, 255, 255, 0.8);
+      transform: scale(1.03);
+    }
+
+    #date {
+      margin-top: 15px;
+      font-size: 1.3rem;
+      color: #a5f3fc;
+      letter-spacing: 2px;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    #clock, #date {
+      animation: fadeIn 1s ease;
+    }
+  </style>
+</head>
+<body>
+  <div id="clock">00:00:00</div>
+  <div id="date">Loading...</div>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      const day = now.toLocaleDateString('en-US', { weekday: 'long' });
+      const date = now.toLocaleDateString('en-US', { day: '2-digit', month: 'long', year: 'numeric' });
+
+      document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+      document.getElementById('date').textContent = `${day}, ${date}`;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+</body>
+</html>
